@@ -1,0 +1,13 @@
+export const MWP_WS_STATUS_CODE = {
+  CLOSED: 4000,
+  CLOSED_ON_ERROR: 4001,
+  CLOSED_ON_TIMEOUT: 4002,
+  CLOSED_ON_CAPACITY: 4003,
+} as const
+
+export const MWP_WS_STATUS = {
+  [MWP_WS_STATUS_CODE.CLOSED]: '正常に切断されました',
+  [MWP_WS_STATUS_CODE.CLOSED_ON_ERROR]: 'エラーにより切断されました',
+  [MWP_WS_STATUS_CODE.CLOSED_ON_TIMEOUT]: '接続がタイムアウトしました',
+  [MWP_WS_STATUS_CODE.CLOSED_ON_CAPACITY]: '接続数上限により切断されました',
+}

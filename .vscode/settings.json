@@ -1,0 +1,36 @@
+{
+  "files.associations": {
+    "partykit.json": "jsonc",
+    "*.css": "tailwindcss"
+  },
+
+  "json.schemas": [
+    {
+      "fileMatch": ["partykit.json"],
+      "url": "https://www.partykit.io/schema.json"
+    }
+  ],
+
+  // Formatter
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+
+  // TypeScript
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  // Tailwind CSS
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "classNames",
+    "itemClasses"
+  ],
+  "tailwindCSS.experimental.classRegex": [
+    ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["tv\\((([^()]*|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ]
+}

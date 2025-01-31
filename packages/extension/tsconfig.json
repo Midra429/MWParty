@@ -1,0 +1,19 @@
+{
+  "extends": "./.wxt/tsconfig.json",
+  "exclude": ["./node_modules", "./dist"],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "skipLibCheck": false,
+    "strict": true,
+    "noEmit": false,
+    "verbatimModuleSyntax": true,
+    "forceConsistentCasingInFileNames": true,
+    "noErrorTruncation": true,
+    "composite": true
+  },
+  "references": [
+    {
+      "path": "../backend"
+    }
+  ]
+}

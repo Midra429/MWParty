@@ -1,0 +1,26 @@
+{
+  "name": "mwparty-backend",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "partykit dev --live",
+    "deploy": "partykit deploy --with-vars",
+    "tail": "partykit tail",
+    "gen-types": "supabase gen types typescript --project-id jaymifyyuamxmfsynsli > ./src/types/supabase.d.ts && prettier --write ./src/types/supabase.d.ts",
+    "gen-schema": "pnpm supazod -i ./src/types/supabase.d.ts -o ./src/schemas/supabase.ts && prettier --write ./src/schemas/supabase.ts"
+  },
+  "dependencies": {
+    "@clerk/backend": "^1.23.7",
+    "@hono/clerk-auth": "^2.0.0",
+    "@supabase/supabase-js": "^2.48.1",
+    "fast-equals": "^5.2.2",
+    "hono": "^4.6.19",
+    "nanoid": "^5.0.9",
+    "partysocket": "^1.0.3",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250124.3",
+    "partykit": "^0.0.111",
+    "supazod": "^1.1.2"
+  }
+}

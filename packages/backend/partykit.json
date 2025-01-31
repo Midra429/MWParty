@@ -1,0 +1,6 @@
+{
+  "name": "mwparty",
+  "compatibilityDate": "2024-11-27",
+  "main": "./src/server.ts",
+  "serve": "./src/public"
+}
