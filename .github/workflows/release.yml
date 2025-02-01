@@ -13,11 +13,11 @@ on:
           - minor
           - patch
       submit_chrome:
-        description: 'Submit to Chrome Web Store'
+        description: 'Chrome Web Store'
         type: boolean
         default: true
       submit_firefox:
-        description: 'Submit to Firefox Add-ons'
+        description: 'Firefox Add-ons'
         type: boolean
         default: true
 
