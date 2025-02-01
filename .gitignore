@@ -243,6 +243,7 @@ stats.html
 stats-*.json
 .wxt
 web-ext.config.ts
+key.json
 
 .env.*
 !.env.example
