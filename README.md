@@ -1,10 +1,10 @@
 # <sub><img src="packages/extension/assets/icon.png" width="30px" height="30px"></sub> MWParty
 [![GitHub Release](https://img.shields.io/github/v/release/Midra429/mwparty?label=Releases)](https://github.com/Midra429/mwparty/releases/latest)
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/cbnglejndffdphngiccfigpaofjdckap?label=Chrome%20Web%20Store)](https://chromewebstore.google.com/detail/cbnglejndffdphngiccfigpaofjdckap)
-<!-- [![Firefox Add-ons](https://img.shields.io/amo/v/mwparty?label=Firefox%20Add-ons)](https://addons.mozilla.org/ja/firefox/addon/mwparty/) -->
+[![Firefox Add-ons](https://img.shields.io/amo/v/mwparty?label=Firefox%20Add-ons)](https://addons.mozilla.org/ja/firefox/addon/mwparty/)
 
 [<img src="packages/extension/assets/badges/chrome.png" height="60px">](https://chromewebstore.google.com/detail/cbnglejndffdphngiccfigpaofjdckap)
-<!-- [<img src="packages/extension/assets/badges/firefox.png" height="60px">](https://addons.mozilla.org/ja/firefox/addon/mwparty/) -->
+[<img src="packages/extension/assets/badges/firefox.png" height="60px">](https://addons.mozilla.org/ja/firefox/addon/mwparty/)
 
 ## 概要
 複数の動画配信サービスに対応したウォッチパーティー用拡張機能です。
@@ -27,8 +27,7 @@
 https://chromewebstore.google.com/detail/cbnglejndffdphngiccfigpaofjdckap
 
 ### Firefox Add-ons
-準備中...
-<!-- https://addons.mozilla.org/ja/firefox/addon/mwparty/ -->
+https://addons.mozilla.org/ja/firefox/addon/mwparty/
 
 ## 不具合報告・機能提案など
 - GitHubの[Issues](https://github.com/Midra429/mwparty/issues)
@@ -85,6 +84,3 @@ curl -X PATCH https://api.clerk.com/v1/instance \
 
 ## ライセンス
 当ライセンスは [MIT](LICENSE.txt) ライセンスの規約に基づいて付与されています。
-
-## プライバシーポリシー
-https://github.com/Midra429/mwparty/blob/main/privacy.md
