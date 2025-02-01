@@ -1,5 +1,5 @@
 /** GitHub */
-export const GITHUB_URL = 'https://github.com/Midra429/mwparty'
+export const GITHUB_URL = 'https://github.com/Midra429/MWParty'
 
 /** その他のリンク */
 export const LINKS: {

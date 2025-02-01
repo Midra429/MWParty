@@ -1,5 +1,5 @@
 # <sub><img src="packages/extension/assets/icon.png" width="30px" height="30px"></sub> MWParty
-[![GitHub Release](https://img.shields.io/github/v/release/Midra429/mwparty?label=Releases)](https://github.com/Midra429/mwparty/releases/latest)
+[![GitHub Release](https://img.shields.io/github/v/release/Midra429/MWParty?label=Releases)](https://github.com/Midra429/MWParty/releases/latest)
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/cbnglejndffdphngiccfigpaofjdckap?label=Chrome%20Web%20Store)](https://chromewebstore.google.com/detail/cbnglejndffdphngiccfigpaofjdckap)
 [![Firefox Add-ons](https://img.shields.io/amo/v/mwparty?label=Firefox%20Add-ons)](https://addons.mozilla.org/ja/firefox/addon/mwparty/)
 
@@ -30,7 +30,7 @@ https://chromewebstore.google.com/detail/cbnglejndffdphngiccfigpaofjdckap
 https://addons.mozilla.org/ja/firefox/addon/mwparty/
 
 ## 不具合報告・機能提案など
-- GitHubの[Issues](https://github.com/Midra429/mwparty/issues)
+- GitHubの[Issues](https://github.com/Midra429/MWParty/issues)
 - SNSアカウント宛にメッセージやメンション
   - X / Twitter: [@Midra429](https://x.com/Midra429)
   - Submarin: [@Midra](https://submarin.online/@Midra)
