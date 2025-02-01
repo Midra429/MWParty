@@ -33,6 +33,8 @@ https://addons.mozilla.org/ja/firefox/addon/mwparty/
 - GitHubの[Issues](https://github.com/Midra429/mwparty/issues)
 - SNSアカウント宛にメッセージやメンション
   - X / Twitter: [@Midra429](https://x.com/Midra429)
+  - Submarin: [@Midra](https://submarin.online/@Midra)
+  - Discord: [midra429](https://discord.gg/wh3s5VNC)
 
 ---
 
@@ -64,22 +66,13 @@ pnpm extension run build:firefox
 
 ### 出力 (ZIP)
 ```sh
-# dist/mwparty-0.0.0-chrome.zip
+# dist/mwparty-extension-0.0.0-chrome.zip
 pnpm extension run zip
 ```
 ```sh
-# dist/mwparty-0.0.0-firefox.zip
-# dist/mwparty-0.0.0-sources.zip
+# dist/mwparty-extension-0.0.0-firefox.zip
+# dist/mwparty-extension-0.0.0-sources.zip
 pnpm extension run zip:firefox
-```
-
-### Clerkの設定
-https://clerk.com/docs/deployments/deploy-chrome-extension#add-the-extensions-id-to-your-web-apps-allowed-origins
-```sh
-curl -X PATCH https://api.clerk.com/v1/instance \
-  -H "Authorization: Bearer sk_live_**********" \
-  -H "Content-type: application/json" \
-  -d '{"allowed_origins": ["chrome-extension://<EXTENSION_ID>", "moz-extension://<EXTENSION_ID>"]}'
 ```
 
 ## ライセンス
