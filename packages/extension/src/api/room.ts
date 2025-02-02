@@ -6,7 +6,7 @@ import { storage } from '@/utils/storage/extension'
 import { getClerkToken } from '@/utils/clerk'
 
 export const roomApi = {
-  BASE_URL: `https://${import.meta.env.WXT_PARTYKIT_HOST}/api/room`,
+  BASE_URL: `${import.meta.env.WXT_PARTYKIT_HOST}/api/room`,
 
   async detail(
     id?: string | null,

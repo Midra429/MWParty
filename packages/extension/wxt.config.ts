@@ -1,27 +1,12 @@
 import type { UserManifest } from 'wxt'
 
-import dotenv from 'dotenv'
 import { defineConfig } from 'wxt'
 
 import { GITHUB_URL } from './src/constants'
 import { uid } from './src/utils/uid'
-import { name, displayName, version, description } from './package.json'
+import { name, displayName, description } from './package.json'
 
 const EXT_BUILD_ID = uid()
-const EXT_USER_AGENT = `${displayName}/${version}`
-
-let env = dotenv.config().parsed
-
-if (env) {
-  const entries = Object.entries(env)
-
-  env = Object.fromEntries([
-    ...entries,
-    ...entries.map(([key, val]) => {
-      return [key.replace(/^(WXT|VITE)_/, ''), val]
-    }),
-  ])
-}
 
 export default defineConfig({
   manifestVersion: 3,
@@ -65,7 +50,7 @@ export default defineConfig({
       web_accessible_resources: [
         {
           resources: ['icons/128.png'],
-          matches: [`https://${import.meta.env.WXT_PARTYKIT_HOST}/*`],
+          matches: [`${import.meta.env.WXT_PARTYKIT_HOST}/*`],
         },
       ],
       permissions,
@@ -122,7 +107,6 @@ export default defineConfig({
   vite: () => ({
     define: {
       EXT_BUILD_ID: JSON.stringify(EXT_BUILD_ID),
-      EXT_USER_AGENT: JSON.stringify(EXT_USER_AGENT),
     },
     build: {
       chunkSizeWarningLimit: Infinity,

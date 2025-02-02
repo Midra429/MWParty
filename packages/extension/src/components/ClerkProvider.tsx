@@ -8,7 +8,7 @@ import { deepmerge } from '@/utils/merge'
 import { webext } from '@/utils/webext'
 import { useTheme } from '@/hooks/useTheme'
 
-const partykitHost = `https://${import.meta.env.WXT_PARTYKIT_HOST}`
+const partykitHost = import.meta.env.WXT_PARTYKIT_HOST
 const publishableKey = import.meta.env.WXT_CLERK_PUBLISHABLE_KEY
 
 const iconUrl = webext.runtime.getURL('/icons/128.png')

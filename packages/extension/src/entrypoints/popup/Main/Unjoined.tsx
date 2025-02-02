@@ -7,6 +7,8 @@ import { PanelItem } from '@/components/PanelItem'
 import { JoinOrOpenButton } from '@/components/mwp/JoinOrOpenButton'
 import { CopyRoomUrlButton } from '@/components/mwp/CopyRoomUrlButton'
 
+const { hostname } = new URL(import.meta.env.WXT_PARTYKIT_HOST_SHORT)
+
 export const Unjoined: React.FC = () => {
   const [myRoom] = useStorage('account:room')
 
@@ -76,9 +78,7 @@ export const Unjoined: React.FC = () => {
             部屋に入ってください
           </p>
 
-          <Code size="sm">
-            {import.meta.env.WXT_PARTYKIT_HOST_SHORT}/room/…
-          </Code>
+          <Code size="sm">{hostname}/room/…</Code>
         </div>
       </PanelItem>
     </div>

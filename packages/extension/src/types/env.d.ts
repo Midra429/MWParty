@@ -1,4 +1,3 @@
-// import.meta.env
 interface ImportMetaEnv {
   // .env
   readonly WXT_PARTYKIT_HOST: string
@@ -12,18 +11,4 @@ interface ImportMetaEnv {
 
 interface ImportMeta {
   readonly env: ImportMetaEnv
-}
-
-// process.env
-declare module 'process' {
-  global {
-    namespace NodeJS {
-      interface ProcessEnv extends ImportMetaEnv {
-        PARTYKIT_HOST: string
-        PARTYKIT_HOST_SHORT: string
-        CLERK_FRONTEND_API: string
-        CLERK_PUBLISHABLE_KEY: string
-      }
-    }
-  }
 }

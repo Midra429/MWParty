@@ -5,7 +5,7 @@ import { sendUtilsMessage } from '@/utils/extension/messaging'
 import { roomApiProxy } from '@/proxy/roomApi/extension'
 
 export default defineContentScript({
-  matches: [`https://${import.meta.env.WXT_PARTYKIT_HOST}/redirect/*`],
+  matches: [`${import.meta.env.WXT_PARTYKIT_HOST}/redirect/*`],
   runAt: 'document_start',
   main: () => void main(),
 })

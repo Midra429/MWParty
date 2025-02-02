@@ -3,7 +3,6 @@ import { createClerkClient } from '@clerk/chrome-extension/background'
 export const getClerkClient = () => {
   return createClerkClient({
     publishableKey: import.meta.env.WXT_CLERK_PUBLISHABLE_KEY,
-    // syncHost: `https://${import.meta.env.WXT_PARTYKIT_HOST}`,
   })
 }
 

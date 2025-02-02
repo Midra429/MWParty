@@ -85,7 +85,7 @@ export default () => {
       } else {
         mwpState.set('manual', true)
 
-        url = `https://${import.meta.env.WXT_PARTYKIT_HOST_SHORT}/manual`
+        url = `${import.meta.env.WXT_PARTYKIT_HOST}/manual`
       }
 
       try {

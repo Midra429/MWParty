@@ -28,7 +28,6 @@
     "@webext-core/messaging": "^2.2.0",
     "color2k": "^2.0.3",
     "deepmerge": "^4.3.1",
-    "dotenv": "^16.4.7",
     "emoji-mart": "^5.6.0",
     "emoji-regex": "^10.4.0",
     "fast-equals": "^5.2.2",

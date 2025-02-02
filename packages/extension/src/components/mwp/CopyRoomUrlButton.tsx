@@ -23,7 +23,7 @@ export const CopyRoomUrlButton: React.FC<CopyRoomUrlButtonProps> = ({
     if (!roomId) return
 
     await navigator.clipboard.writeText(
-      `https://${import.meta.env.WXT_PARTYKIT_HOST_SHORT}/room/${roomId}`
+      `${import.meta.env.WXT_PARTYKIT_HOST_SHORT}/room/${roomId}`
     )
 
     toast.success('コピーしました')

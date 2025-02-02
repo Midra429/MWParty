@@ -8,7 +8,7 @@ import { logger } from '@/utils/logger'
 import App from './App'
 
 export default defineContentScript({
-  matches: [`https://${import.meta.env.WXT_PARTYKIT_HOST}/room/*`],
+  matches: [`${import.meta.env.WXT_PARTYKIT_HOST}/room/*`],
   main: (ctx) => {
     logger.log('room.js')
 
