@@ -9,14 +9,9 @@ export const LINKS: {
 }[] = [
   {
     title: 'X / Twitter',
-    label: '@Midra429',
-    url: 'https://x.com/Midra429',
+    label: '@MWPartyExt',
+    url: 'https://x.com/MWPartyExt',
   },
-  // {
-  //   title: 'X / Twitter',
-  //   label: '@MWPartyExt',
-  //   url: 'https://x.com/MWPartyExt',
-  // },
   {
     title: 'Amazon',
     label: 'ほしい物リスト',
