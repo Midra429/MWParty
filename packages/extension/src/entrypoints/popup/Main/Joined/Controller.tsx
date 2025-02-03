@@ -1,6 +1,9 @@
+import type { PressEvent } from '@react-types/shared'
+
 import { useEffect, useState, useMemo, useCallback } from 'react'
 import { Divider, cn } from '@heroui/react'
 import { useOverflowDetector } from 'react-detectable-overflow'
+import party from 'party-js'
 import {
   PlayIcon,
   PauseIcon,
@@ -83,7 +86,28 @@ export const Controller: React.FC = () => {
   const mode = useMwpState('mode')
   const manual = useMwpState('manual')
 
-  const isDisabled = currentTabId == null
+  // パーティーを開始
+  const startParty = useCallback(
+    async ({ target }: PressEvent) => {
+      if (currentTabId == null) return
+
+      const rect = party.Rect.fromElement(target as HTMLElement)
+
+      await mwpState.set('tabId', currentTabId)
+
+      party.confetti(rect, {
+        count: 40,
+        spread: 15,
+        size: 0.8,
+      })
+    },
+    [currentTabId]
+  )
+
+  // パーティーを終了
+  const endParty = useCallback(async () => {
+    await mwpState.remove('tabId')
+  }, [])
 
   // パーティーを再同期
   const reloadParty = useCallback(async () => {
@@ -124,7 +148,7 @@ export const Controller: React.FC = () => {
     webext
       .getCurrentActiveTab()
       .then((tab) => {
-        if (tab?.id != null && tab.id !== -1) {
+        if (tab?.id != null && tab.id !== webext.tabs.TAB_ID_NONE) {
           setCurrentTabId(tab.id)
         }
       })
@@ -179,7 +203,7 @@ export const Controller: React.FC = () => {
                 title="パーティを終了しますか？"
                 description="再生状況の同期を停止します。"
                 okColor="danger"
-                onOk={() => mwpState.remove('tabId')}
+                onOk={endParty}
               >
                 <Button
                   size="sm"
@@ -219,12 +243,8 @@ export const Controller: React.FC = () => {
                 size="sm"
                 color="primary"
                 startContent={<PartyPopperIcon />}
-                isDisabled={isDisabled}
-                onPress={
-                  isDisabled
-                    ? undefined
-                    : () => mwpState.set('tabId', currentTabId)
-                }
+                isDisabled={currentTabId == null}
+                onPress={startParty}
               >
                 パーティーを開始
               </Button>
