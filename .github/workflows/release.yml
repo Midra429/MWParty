@@ -27,6 +27,9 @@ jobs:
     permissions:
       contents: write
       id-token: write
+    defaults:
+      run:
+        working-directory: packages/extension
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -44,9 +47,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install Dependencies
-        run: |
-          cd packages/extension
-          pnpm install
+        run: pnpm install
 
       - name: Setup Git
         run: |
