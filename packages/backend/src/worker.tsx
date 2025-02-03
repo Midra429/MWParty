@@ -33,7 +33,14 @@ worker.get('/manual', (ctx) => {
 })
 
 worker.get('/redirect/*', (ctx) => {
-  return ctx.html('')
+  return ctx.render(
+    <>
+      <p>拡張機能へリダイレクト中...</p>
+      <p>
+        しばらく経ってもページが切り替わらない場合は、タブを閉じてください。
+      </p>
+    </>
+  )
 })
 
 worker.route('/api', routeApi)
