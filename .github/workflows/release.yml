@@ -44,7 +44,9 @@ jobs:
           cache: 'pnpm'
 
       - name: Install Dependencies
-        run: pnpm install
+        run: |
+          cd packages/extension
+          pnpm install
 
       - name: Setup Git
         run: |
