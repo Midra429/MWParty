@@ -58,12 +58,8 @@ jobs:
 
       - name: Zip Extensions
         run: |
-          if [[ "${{ github.event.inputs.submit_chrome }}" == "true" ]]; then
-            pnpm zip
-          fi
-          if [[ "${{ github.event.inputs.submit_firefox }}" == "true" ]]; then
-            pnpm zip:firefox
-          fi
+          pnpm zip
+          pnpm zip:firefox
 
       - name: Push tag to GitHub
         run: |
@@ -72,14 +68,7 @@ jobs:
 
       - name: Create Release to GitHub
         run: |
-          ASSETS=""
-          if [[ "${{ github.event.inputs.submit_chrome }}" == "true" ]]; then
-            ASSETS="$ASSETS dist/*-chrome.zip"
-          fi
-          if [[ "${{ github.event.inputs.submit_firefox }}" == "true" ]]; then
-            ASSETS="$ASSETS dist/*-firefox.zip"
-          fi
-          gh release create "${VERSION}" $ASSETS
+          gh release create "${VERSION}" dist/*-chrome.zip dist/*-firefox.zip
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
