@@ -68,7 +68,7 @@ jobs:
 
       - name: Create Release to GitHub
         run: |
-          gh release create "${VERSION}" dist/*-chrome.zip dist/*-firefox.zip
+          gh release create "${VERSION}" dist/*-chrome.zip dist/*-firefox.zip -t "MWParty ${VERSION}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
