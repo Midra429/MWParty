@@ -32,7 +32,7 @@ https://addons.mozilla.org/ja/firefox/addon/mwparty/
 ## 不具合報告・機能提案など
 - GitHubの[Issues](https://github.com/Midra429/MWParty/issues)
 - SNSアカウント宛にメッセージやメンション
-  - X / Twitter: [@Midra429](https://x.com/Midra429)
+  - X / Twitter: [@MWPartyExt](https://x.com/MWPartyExt)
   - Submarin: [@Midra](https://submarin.online/@Midra)
   - Discord: [midra429](https://discord.gg/wh3s5VNC)
 
@@ -56,22 +56,22 @@ pnpm extension run dev:firefox
 
 ### 出力
 ```sh
-# dist/chrome-mv3
+# packages/extension/dist/chrome-mv3
 pnpm extension run build
 ```
 ```sh
-# dist/firefox-mv3
+# packages/extension/dist/firefox-mv3
 pnpm extension run build:firefox
 ```
 
 ### 出力 (ZIP)
 ```sh
-# dist/mwparty-extension-0.0.0-chrome.zip
+# packages/extension/dist/mwparty-extension-0.0.0-chrome.zip
 pnpm extension run zip
 ```
 ```sh
-# dist/mwparty-extension-0.0.0-firefox.zip
-# dist/mwparty-extension-0.0.0-sources.zip
+# packages/extension/dist/mwparty-extension-0.0.0-firefox.zip
+# packages/extension/dist/mwparty-extension-0.0.0-sources.zip
 pnpm extension run zip:firefox
 ```
 
