@@ -16,10 +16,6 @@ on:
         description: 'Chrome Web Store'
         type: boolean
         default: true
-      submit_firefox:
-        description: 'Firefox Add-ons'
-        type: boolean
-        default: true
 
 jobs:
   submit:
@@ -62,7 +58,6 @@ jobs:
       - name: 拡張機能をビルド
         run: |
           pnpm zip
-          pnpm zip:firefox
 
       - name: リポジトリへプッシュ
         working-directory: ./
@@ -78,7 +73,6 @@ jobs:
         run: |
           gh release create "${VERSION}" \
             ./packages/extension/dist/*-chrome.zip \
-            ./packages/extension/dist/*-firefox.zip \
             -t "$(cat ./packages/extension/package.json | jq -r '.displayName') ${VERSION}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -93,14 +87,3 @@ jobs:
           CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
           CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
           CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
-
-      - name: Firefox Add-onsへ提出
-        if: ${{ github.event.inputs.submit_firefox == 'true' }}
-        run: |
-          pnpm wxt submit \
-            --firefox-zip ./dist/*-firefox.zip \
-            --firefox-sources-zip ./dist/*-sources.zip
-        env:
-          FIREFOX_EXTENSION_ID: ${{ secrets.FIREFOX_EXTENSION_ID }}
-          FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_JWT_ISSUER }}
-          FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_JWT_SECRET }}
