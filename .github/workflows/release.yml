@@ -73,7 +73,10 @@ jobs:
       - name: Create Release to GitHub
         working-directory: ./
         run: |
-          gh release create "${VERSION}" dist/*-chrome.zip dist/*-firefox.zip -t "MWParty ${VERSION}"
+          gh release create "${VERSION}" \
+            ./packages/extension/dist/*-chrome.zip \
+            ./packages/extension/dist/*-firefox.zip \
+            -t "MWParty ${VERSION}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -90,7 +93,9 @@ jobs:
       - name: Submit to Firefox Add-ons
         if: ${{ github.event.inputs.submit_firefox == 'true' }}
         run: |
-          pnpm wxt submit --firefox-zip dist/*-firefox.zip --firefox-sources-zip dist/*-sources.zip
+          pnpm wxt submit \
+            --firefox-zip ./dist/*-firefox.zip \
+            --firefox-sources-zip ./dist/*-sources.zip
         env:
           FIREFOX_EXTENSION_ID: ${{ secrets.FIREFOX_EXTENSION_ID }}
           FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_JWT_ISSUER }}
