@@ -4,7 +4,11 @@ export const skipSeekingEvent = () => {
   let seekingListener: EventListener | null = null
 
   HTMLVideoElement.prototype.addEventListener = new Proxy(_addEventListener, {
-    apply(target, thisArg, argArray: Parameters<typeof _addEventListener>) {
+    apply: (
+      target,
+      thisArg,
+      argArray: Parameters<HTMLVideoElement['addEventListener']>
+    ) => {
       const [event, listener] = argArray
 
       if (
@@ -15,13 +19,11 @@ export const skipSeekingEvent = () => {
       ) {
         seekingListener = listener
 
-        function hookSeekingEvent(this: HTMLVideoElement, evt: Event) {
+        argArray[1] = function (this: HTMLVideoElement, evt: Event) {
           if (!document.querySelector('.mwp-video')) {
             seekingListener?.call(this, evt)
           }
         }
-
-        return Reflect.apply(target, thisArg, [event, hookSeekingEvent])
       }
 
       return Reflect.apply(target, thisArg, argArray)
