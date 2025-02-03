@@ -64,9 +64,12 @@ jobs:
           pnpm zip
           pnpm zip:firefox
 
-      - name: Push tag to GitHub
+      - name: Push to GitHub
         working-directory: ./
         run: |
+          git add ./packages/extension/package.json
+          git commit -m "${VERSION}"
+          git tag "${VERSION}"
           git push
           git push --tags
 
