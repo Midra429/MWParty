@@ -11,6 +11,7 @@ export type MwpVod = Readonly<
     getId: () => string | null
     getTitle: () => Promise<string | null>
     createUrl: (id: string) => string
+    createSearchUrl: (keyword: string) => string
   }
 >
 
@@ -57,6 +58,15 @@ export const mwpVods: Record<VodKey, MwpVod> = {
 
       return url.href
     },
+    createSearchUrl(keyword) {
+      const url = new URL(`https://${this.hostname}/s`)
+
+      url.searchParams.set('k', keyword)
+      url.searchParams.set('i', 'instant-video')
+      url.searchParams.set('dc', '')
+
+      return url.href
+    },
   },
 
   dAnime: {
@@ -81,6 +91,13 @@ export const mwpVods: Record<VodKey, MwpVod> = {
       const url = new URL(`https://${this.hostname}/animestore/sc_d_pc`)
 
       url.searchParams.set('partId', id)
+
+      return url.href
+    },
+    createSearchUrl(keyword) {
+      const url = new URL(`https://${this.hostname}/animestore/sch_pc`)
+
+      url.searchParams.set('searchKey', keyword)
 
       return url.href
     },
@@ -137,6 +154,13 @@ export const mwpVods: Record<VodKey, MwpVod> = {
     },
     createUrl(id) {
       return `https://${this.hostname}/video/episode/${id}`
+    },
+    createSearchUrl(keyword) {
+      const url = new URL(`https://${this.hostname}/search`)
+
+      url.searchParams.set('q', keyword)
+
+      return url.href
     },
   },
 
@@ -196,6 +220,13 @@ export const mwpVods: Record<VodKey, MwpVod> = {
 
       return url.href
     },
+    createSearchUrl(keyword) {
+      const url = new URL(`https://${this.hostname}/vod/list/`)
+
+      url.searchParams.set('keyword', keyword)
+
+      return url.href
+    },
   },
 
   hulu: {
@@ -230,6 +261,13 @@ export const mwpVods: Record<VodKey, MwpVod> = {
     },
     createUrl(id) {
       return `https://${this.hostname}/watch/${id}`
+    },
+    createSearchUrl(keyword) {
+      const url = new URL(`https://${this.hostname}/search`)
+
+      url.searchParams.set('q', keyword)
+
+      return url.href
     },
   },
 
@@ -273,6 +311,13 @@ export const mwpVods: Record<VodKey, MwpVod> = {
     createUrl(id) {
       return `https://${this.hostname}/play/${id}`
     },
+    createSearchUrl(keyword) {
+      const url = new URL(`https://${this.hostname}/freeword`)
+
+      url.searchParams.set('query', keyword)
+
+      return url.href
+    },
   },
 
   youtube: {
@@ -289,6 +334,13 @@ export const mwpVods: Record<VodKey, MwpVod> = {
       const url = new URL(`https://${this.hostname}/watch`)
 
       url.searchParams.set('v', id)
+
+      return url.href
+    },
+    createSearchUrl(keyword) {
+      const url = new URL(`https://${this.hostname}/results`)
+
+      url.searchParams.set('search_query', keyword)
 
       return url.href
     },
@@ -316,6 +368,9 @@ export const mwpVods: Record<VodKey, MwpVod> = {
     },
     createUrl(id) {
       return `https://${this.hostname}/watch/${id}`
+    },
+    createSearchUrl(keyword) {
+      return `https://${this.hostname}/search/${encodeURIComponent(keyword)}`
     },
   },
 
@@ -345,6 +400,9 @@ export const mwpVods: Record<VodKey, MwpVod> = {
     },
     createUrl(id) {
       return `https://${this.hostname}/episodes/${id}`
+    },
+    createSearchUrl(keyword) {
+      return `https://${this.hostname}/search/${encodeURIComponent(keyword)}`
     },
   },
 }
