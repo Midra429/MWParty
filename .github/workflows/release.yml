@@ -56,8 +56,9 @@ jobs:
           echo VERSION="v$(cat ./package.json | jq -r '.version')" >> "${GITHUB_ENV}"
 
       - name: 拡張機能をビルド
-        run: |
-          pnpm zip
+        run: pnpm zip
+        env:
+          WXT_CRX_PUBLIC_KEY: ${{ secrets.WXT_CRX_PUBLIC_KEY }}
 
       - name: リポジトリへプッシュ
         working-directory: ./
