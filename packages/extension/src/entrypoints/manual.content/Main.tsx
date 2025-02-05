@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { cn, Divider, Link } from '@heroui/react'
+import { Link, Divider, cn } from '@heroui/react'
 import { FilmIcon, SearchIcon } from 'lucide-react'
 import { ncoParser } from '@midra/nco-parser'
 
@@ -26,10 +26,11 @@ export const Main: React.FC = () => {
 
     const vodKeys = VOD_KEYS.filter((key) => vods.includes(key))
 
+    const keyword =
+      ncoParser.extract(playbackVod.title).title || playbackVod.title
+
     return vodKeys.map((key) => {
       const mwpVod = mwpVods[key]
-      const keyword =
-        ncoParser.extract(playbackVod.title).title || playbackVod.title
       const url = mwpVod.createSearchUrl(keyword)
 
       return [mwpVod.name, url] as const
