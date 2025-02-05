@@ -112,16 +112,11 @@ export const Main: React.FC = () => {
               <span>検索</span>
             </div>
 
-            <div className="flex flex-row flex-wrap gap-x-3 gap-y-2">
+            <div className="flex flex-row flex-wrap gap-1">
               {searchUrls?.map(([name, url]) => {
                 return (
                   <div key={name}>
-                    <Link
-                      underline="hover"
-                      showAnchorIcon
-                      href={url}
-                      isExternal
-                    >
+                    <Link isBlock showAnchorIcon href={url} isExternal>
                       {name}
                     </Link>
                   </div>

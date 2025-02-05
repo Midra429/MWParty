@@ -1,14 +1,27 @@
+import type { LinkProps } from '@heroui/react'
 import type { ChatReceiveMessage } from 'backend/schemas/message'
 
-import { Fragment, useMemo } from 'react'
-import { Avatar, Link, cn } from '@heroui/react'
+import { Fragment, useState, useMemo } from 'react'
+import {
+  ButtonGroup,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Avatar,
+  Link,
+  cn,
+} from '@heroui/react'
+import { useUser } from '@clerk/chrome-extension'
 import Twemoji from 'react-twemoji'
 import emojiRegex from 'emoji-regex'
+import { HomeIcon, LinkIcon, ExternalLinkIcon } from 'lucide-react'
 
 import { countString } from '@/utils/string'
 import { formatDate } from '@/utils/format'
 import { useMwpState } from '@/hooks/useMwpState'
-import { HomeIcon } from 'lucide-react'
+
+import { Button } from '@/components/Button'
+import { webext } from '@/utils/webext'
 
 const MAX_EMOJI_ONLY_COUNT = 5
 const MIN_EMOJI_SIZE = 1.2
@@ -16,11 +29,57 @@ const MAX_EMOJI_SIZE = MIN_EMOJI_SIZE * 4
 
 const emojiRegExp = emojiRegex()
 
-type LinkifyTextProps = {
-  text: string
+const LinkWithPopover: React.FC<LinkProps> = ({ href, ...props }) => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <Popover
+      classNames={{
+        content: 'overflow-hidden p-0',
+      }}
+      radius="full"
+      isOpen={isOpen}
+      onOpenChange={setIsOpen}
+    >
+      <PopoverTrigger>
+        <Link {...props}>{props.children}</Link>
+      </PopoverTrigger>
+
+      <PopoverContent>
+        <ButtonGroup size="sm" variant="light">
+          <Button
+            size="sm"
+            startContent={<LinkIcon />}
+            onPress={async () => {
+              await webext.tabs.update({ url: href })
+
+              setIsOpen(false)
+            }}
+          >
+            現在のタブ
+          </Button>
+
+          <Button
+            size="sm"
+            startContent={<ExternalLinkIcon />}
+            onPress={async () => {
+              await webext.tabs.create({ url: href })
+
+              setIsOpen(false)
+            }}
+          >
+            新しいタブ
+          </Button>
+        </ButtonGroup>
+      </PopoverContent>
+    </Popover>
+  )
 }
 
-const LinkifyText: React.FC<LinkifyTextProps> = ({ text }) => {
+const LinkifyText: React.FC<{
+  text: string
+  isHost?: boolean
+}> = ({ text, isHost }) => {
   const urlRegExp =
     /(https?:\/\/(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,}(?:\/[^\s\n]*)?)/g
 
@@ -28,7 +87,26 @@ const LinkifyText: React.FC<LinkifyTextProps> = ({ text }) => {
     if (urlRegExp.test(part) && URL.canParse(part)) {
       const url = new URL(part)
 
-      return (
+      const content = (
+        <>
+          {`${url.protocol}//`}
+          <span className="font-bold">{url.hostname}</span>
+          {decodeURIComponent(url.pathname)}
+          {decodeURIComponent(url.search)}
+          {decodeURIComponent(url.hash)}
+        </>
+      )
+
+      return isHost ? (
+        <LinkWithPopover
+          key={idx}
+          className="inline cursor-pointer text-small"
+          underline="hover"
+          href={part}
+        >
+          {content}
+        </LinkWithPopover>
+      ) : (
         <Link
           key={idx}
           className="inline text-small"
@@ -36,11 +114,7 @@ const LinkifyText: React.FC<LinkifyTextProps> = ({ text }) => {
           href={part}
           isExternal
         >
-          {`${url.protocol}//`}
-          <span className="font-bold">{url.hostname}</span>
-          {decodeURIComponent(url.pathname)}
-          {decodeURIComponent(url.search)}
-          {decodeURIComponent(url.hash)}
+          {content}
         </Link>
       )
     }
@@ -54,6 +128,8 @@ export type ChatMessageProps = {
 }
 
 export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
+  const { user } = useUser()
+
   const joinedRoom = useMwpState('room')
   const presence = useMwpState('presence')
 
@@ -76,6 +152,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
 
   const isOwn = message.user._isOwn
   const isOwner = message.user.id === joinedRoom?.user_id
+  const isHost = user?.id === joinedRoom?.user_id
 
   return (
     <div
@@ -196,7 +273,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
                   } as React.CSSProperties
                 }
               >
-                <LinkifyText text={message.body} />
+                <LinkifyText text={message.body} isHost={isHost} />
               </span>
             </Twemoji>
           </div>
