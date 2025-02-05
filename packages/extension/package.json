@@ -16,7 +16,7 @@
     "compile": "tsc -p tsconfig.build.json --noEmit"
   },
   "dependencies": {
-    "@clerk/chrome-extension": "^2.2.5",
+    "@clerk/chrome-extension": "^2.2.6",
     "@clerk/localizations": "^3.10.4",
     "@clerk/themes": "^2.2.16",
     "@emoji-mart/data": "^1.2.1",
@@ -31,7 +31,7 @@
     "emoji-mart": "^5.6.0",
     "emoji-regex": "^10.4.0",
     "fast-equals": "^5.2.2",
-    "framer-motion": "^12.0.6",
+    "framer-motion": "^12.1.0",
     "lucide-react": "^0.474.0",
     "nanoid": "^5.0.9",
     "party-js": "^2.2.0",
@@ -44,7 +44,7 @@
     "virtua": "^0.40.0"
   },
   "devDependencies": {
-    "@clerk/clerk-js": "^5.51.0",
+    "@clerk/clerk-js": "^5.52.0",
     "@react-types/shared": "^3.27.0",
     "@types/nanoid-dictionary": "^4.2.3",
     "@types/react": "^19.0.8",
