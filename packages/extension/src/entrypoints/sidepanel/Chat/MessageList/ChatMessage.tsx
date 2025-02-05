@@ -1,7 +1,7 @@
 import type { ChatReceiveMessage } from 'backend/schemas/message'
 
-import { useMemo } from 'react'
-import { Avatar, cn } from '@heroui/react'
+import { Fragment, useMemo } from 'react'
+import { Avatar, Link, cn } from '@heroui/react'
 import Twemoji from 'react-twemoji'
 import emojiRegex from 'emoji-regex'
 
@@ -15,6 +15,39 @@ const MIN_EMOJI_SIZE = 1.2
 const MAX_EMOJI_SIZE = MIN_EMOJI_SIZE * 4
 
 const emojiRegExp = emojiRegex()
+
+type LinkifyTextProps = {
+  text: string
+}
+
+const LinkifyText: React.FC<LinkifyTextProps> = ({ text }) => {
+  const urlRegExp =
+    /(https?:\/\/(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,}(?:\/[^\s\n]*)?)/g
+
+  return text.split(urlRegExp).map((part, idx) => {
+    if (urlRegExp.test(part) && URL.canParse(part)) {
+      const url = new URL(part)
+
+      return (
+        <Link
+          key={idx}
+          className="inline text-small"
+          underline="hover"
+          href={part}
+          isExternal
+        >
+          {`${url.protocol}//`}
+          <span className="font-bold">{url.hostname}</span>
+          {decodeURIComponent(url.pathname)}
+          {decodeURIComponent(url.search)}
+          {decodeURIComponent(url.hash)}
+        </Link>
+      )
+    }
+
+    return <Fragment key={idx}>{part}</Fragment>
+  })
+}
 
 export type ChatMessageProps = {
   message: ChatReceiveMessage
@@ -163,7 +196,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
                   } as React.CSSProperties
                 }
               >
-                {message.body}
+                <LinkifyText text={message.body} />
               </span>
             </Twemoji>
           </div>

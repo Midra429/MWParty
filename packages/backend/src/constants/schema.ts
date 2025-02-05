@@ -1,1 +1,1 @@
-export const CHAT_MAX_LENGTH = 150
+export const CHAT_MAX_LENGTH = 250
