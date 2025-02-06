@@ -58,6 +58,10 @@ jobs:
       - name: 拡張機能をビルド
         run: pnpm zip
         env:
+          WXT_PARTYKIT_HOST: ${{ secrets.WXT_PARTYKIT_HOST }}
+          WXT_PARTYKIT_HOST_SHORT: ${{ secrets.WXT_PARTYKIT_HOST_SHORT }}
+          WXT_CLERK_FRONTEND_API: ${{ secrets.WXT_CLERK_FRONTEND_API }}
+          WXT_CLERK_PUBLISHABLE_KEY: ${{ secrets.WXT_CLERK_PUBLISHABLE_KEY }}
           WXT_CRX_PUBLIC_KEY: ${{ secrets.WXT_CRX_PUBLIC_KEY }}
 
       - name: リポジトリへプッシュ
