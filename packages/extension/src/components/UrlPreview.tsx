@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react'
 import { Divider, Skeleton, cn } from '@heroui/react'
 import { useOverflowDetector } from 'react-detectable-overflow'
 
-import { getMetaData } from '@/utils/getMetaData'
+import { ogpApi } from '@/api/ogp'
 import { mwpState } from '@/mwp/state'
 import { useMwpState } from '@/hooks/useMwpState'
 
@@ -15,26 +15,26 @@ export const UrlPreview: React.FC<UrlPreviewProps> = ({ className, url }) => {
   const [isLoading, setIsLoading] = useState(true)
   const { ref, overflow } = useOverflowDetector()
 
-  const meta = useMwpState(`meta:${url}`)
+  const ogp = useMwpState(`ogp:${url}`)
 
   const { origin, hostname } = useMemo(() => {
     return new URL(url)
   }, [url])
 
-  const image = meta?.['og:image']
-  const siteName = meta?.['og:site_name'] || hostname
-  const title = meta?.['og:title'] || meta?.title
+  const image = ogp?.image
+  const siteName = ogp?.site_name || hostname
+  const title = ogp?.title
 
   useEffect(() => {
-    mwpState.get(`meta:${url}`).then((meta) => {
-      if (meta) {
+    mwpState.get(`ogp:${url}`).then((ogp) => {
+      if (ogp) {
         setIsLoading(false)
 
         return
       }
 
-      getMetaData(url).then(async (meta) => {
-        await mwpState.set(`meta:${url}`, meta)
+      ogpApi.get(url).then(async (ogp) => {
+        await mwpState.set(`ogp:${url}`, ogp)
 
         setIsLoading(false)
       })

@@ -283,7 +283,10 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
 
             {/* リンクプレビュー */}
             {lastUrl && (
-              <UrlPreview className="mb-0.5 ml-auto mt-2" url={lastUrl} />
+              <UrlPreview
+                className={cn('mb-0.5 mt-2', isOwn ? 'ml-auto' : 'mr-auto')}
+                url={lastUrl}
+              />
             )}
           </div>
 
