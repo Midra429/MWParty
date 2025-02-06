@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react'
-import { Divider, Image, Skeleton, cn } from '@heroui/react'
+import { Divider, Skeleton, cn } from '@heroui/react'
+import { useOverflowDetector } from 'react-detectable-overflow'
 
 import { getMetaData } from '@/utils/getMetaData'
 import { mwpState } from '@/mwp/state'
@@ -12,6 +13,7 @@ export type UrlPreviewProps = {
 
 export const UrlPreview: React.FC<UrlPreviewProps> = ({ className, url }) => {
   const [isLoading, setIsLoading] = useState(true)
+  const { ref, overflow } = useOverflowDetector()
 
   const meta = useMwpState(`meta:${url}`)
 
@@ -19,9 +21,9 @@ export const UrlPreview: React.FC<UrlPreviewProps> = ({ className, url }) => {
     return new URL(url)
   }, [url])
 
+  const image = meta?.['og:image']
   const siteName = meta?.['og:site_name'] || hostname
   const title = meta?.['og:title'] || meta?.title
-  const isLargeImage = meta?.['twitter:card'] === 'summary_large_image'
 
   useEffect(() => {
     mwpState.get(`meta:${url}`).then((meta) => {
@@ -42,55 +44,56 @@ export const UrlPreview: React.FC<UrlPreviewProps> = ({ className, url }) => {
   return (
     <div
       className={cn(
-        'flex',
-        isLargeImage ? 'flex-col' : 'h-[64px] flex-row',
-        'w-full min-w-[180px] max-w-[300px]',
+        'flex flex-row',
+        'h-[64px] w-full min-w-[180px] max-w-[300px]',
         'border-1 border-divider',
         'rounded-small',
         'overflow-hidden',
         className
       )}
     >
-      {(isLoading || meta?.['og:image']) && (
+      {(isLoading || image) && (
         <>
           <div
             className={cn(
-              isLargeImage ? 'aspect-[2/1] w-full' : 'aspect-square h-full',
-
+              'aspect-square h-full',
               'shrink-0',
               'bg-background bg-cover bg-center',
               'transition-background'
             )}
             style={{
-              backgroundImage: meta?.['og:image']
-                ? `url(${meta['og:image']})`
-                : undefined,
+              backgroundImage: image ? `url("${image}")` : undefined,
             }}
           />
 
-          <Divider orientation={isLargeImage ? 'horizontal' : 'vertical'} />
+          <Divider orientation="vertical" />
         </>
       )}
 
       <div
         className={cn(
           'flex flex-col justify-center gap-[2px]',
-          'h-[62px] w-full p-[6px]',
+          'size-full p-[6px]',
           'bg-content2'
         )}
       >
         {isLoading ? (
-          <Skeleton className="h-[16px] w-full rounded-sm" />
+          <div className="flex h-[16px] flex-col justify-center">
+            <Skeleton className="h-[14px] w-3/5 rounded-sm" />
+          </div>
         ) : (
           <div className="flex h-[16px] flex-row items-center gap-1">
-            <Image
-              classNames={{
-                wrapper: 'aspect-square size-[14px] shrink-0 bg-background',
-                img: 'size-full object-cover',
+            <div
+              className={cn(
+                'aspect-square h-[14px]',
+                'shrink-0',
+                'rounded-sm',
+                'bg-white bg-[length:12px] bg-center bg-no-repeat',
+                'transition-background'
+              )}
+              style={{
+                backgroundImage: `url("https://www.google.com/s2/favicons?domain=${origin}&sz=32")`,
               }}
-              radius="none"
-              src={`https://www.google.com/s2/favicons?domain=${origin}&sz=32`}
-              draggable={false}
             />
 
             <p
@@ -98,7 +101,6 @@ export const UrlPreview: React.FC<UrlPreviewProps> = ({ className, url }) => {
                 'line-clamp-1 text-tiny',
                 'text-foreground-400 dark:text-foreground-600'
               )}
-              title={siteName}
             >
               {siteName}
             </p>
@@ -106,11 +108,15 @@ export const UrlPreview: React.FC<UrlPreviewProps> = ({ className, url }) => {
         )}
 
         {isLoading ? (
-          <Skeleton className="h-[16px] w-full rounded-sm" />
+          <div className="flex h-[32px] flex-col justify-center gap-[2px]">
+            <Skeleton className="h-[14px] w-full rounded-sm" />
+            <Skeleton className="h-[14px] w-4/5 rounded-sm" />
+          </div>
         ) : (
           <p
             className="line-clamp-2 break-all text-tiny font-bold"
-            title={title}
+            title={overflow ? title : undefined}
+            ref={ref as any}
           >
             {title || url}
           </p>
