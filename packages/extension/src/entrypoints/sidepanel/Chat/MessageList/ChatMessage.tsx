@@ -1,7 +1,7 @@
 import type { LinkProps } from '@heroui/react'
 import type { ChatReceiveMessage } from 'backend/schemas/message'
 
-import { useState, useMemo } from 'react'
+import { Fragment, useState, useMemo } from 'react'
 import {
   ButtonGroup,
   Popover,
@@ -119,7 +119,7 @@ const LinkifyText: React.FC<{
       )
     }
 
-    return <span key={idx}>{part}</span>
+    return <Fragment key={idx}>{part}</Fragment>
   })
 }
 
