@@ -6,6 +6,7 @@ import type {
 import type { RoomDetail } from 'backend/routes/api/room'
 import type { StorageItems } from '@/types/storage'
 import type { StorageOnChangeCallback } from '@/utils/storage'
+import type { MetaData } from '@/utils/getMetaData'
 
 import { PARTY_STORAGE_DEFAULT } from 'backend/constants/partykit'
 // import { queue } from 'backend/utils/queue'
@@ -19,6 +20,8 @@ export type MwpStateItems = {
   manual: boolean
   room: RoomDetail
   ping: number
+} & {
+  [key: `meta:${string}`]: MetaData
 } & Omit<PartyStorageItems, `user:${string}`>
 
 export type MwpStateKey = keyof MwpStateItems
@@ -236,12 +239,23 @@ export const mwpState = {
   },
 
   async clear() {
-    return this.remove(
+    const keys = Object.keys(await storage.get())
+
+    const metaKeys = keys.filter((key) => {
+      return key.startsWith('state:meta:')
+    }) as `state:meta:${string}`[]
+
+    if (metaKeys.length) {
+      await storage.remove(...metaKeys)
+    }
+
+    await this.remove(
       'tabId',
       'mode',
       'manual',
       'room',
       'ping',
+
       'presence',
       'playback',
       'history:presence',

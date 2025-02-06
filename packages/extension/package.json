@@ -26,6 +26,7 @@
     "@midra/nco-api": "^1.10.3",
     "@midra/nco-parser": "^1.0.29",
     "@webext-core/messaging": "^2.2.0",
+    "cheerio": "^1.0.0",
     "color2k": "^2.0.3",
     "deepmerge": "^4.3.1",
     "emoji-mart": "^5.6.0",

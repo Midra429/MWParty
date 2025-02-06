@@ -1,7 +1,7 @@
 import type { LinkProps } from '@heroui/react'
 import type { ChatReceiveMessage } from 'backend/schemas/message'
 
-import { Fragment, useState, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import {
   ButtonGroup,
   Popover,
@@ -18,16 +18,19 @@ import { HomeIcon, LinkIcon, ExternalLinkIcon } from 'lucide-react'
 
 import { countString } from '@/utils/string'
 import { formatDate } from '@/utils/format'
+import { webext } from '@/utils/webext'
 import { useMwpState } from '@/hooks/useMwpState'
 
 import { Button } from '@/components/Button'
-import { webext } from '@/utils/webext'
+import { UrlPreview } from '@/components/UrlPreview'
 
 const MAX_EMOJI_ONLY_COUNT = 5
 const MIN_EMOJI_SIZE = 1.2
 const MAX_EMOJI_SIZE = MIN_EMOJI_SIZE * 4
 
 const emojiRegExp = emojiRegex()
+const urlRegExp =
+  /(https?:\/\/(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,}(?:\/[^\s\n]*)?)/g
 
 const LinkWithPopover: React.FC<LinkProps> = ({ href, ...props }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -80,9 +83,6 @@ const LinkifyText: React.FC<{
   text: string
   isHost?: boolean
 }> = ({ text, isHost }) => {
-  const urlRegExp =
-    /(https?:\/\/(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,}(?:\/[^\s\n]*)?)/g
-
   return text.split(urlRegExp).map((part, idx) => {
     if (urlRegExp.test(part) && URL.canParse(part)) {
       const url = new URL(part)
@@ -119,7 +119,7 @@ const LinkifyText: React.FC<{
       )
     }
 
-    return <Fragment key={idx}>{part}</Fragment>
+    return <span key={idx}>{part}</span>
   })
 }
 
@@ -144,6 +144,10 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
           Math.max(MAX_EMOJI_ONLY_COUNT - count + 1, 0)
       )
     }
+  }, [message.body])
+
+  const lastUrl = useMemo(() => {
+    return message.body.match(urlRegExp)?.at(-1)
   }, [message.body])
 
   const isOnline = useMemo(() => {
@@ -247,7 +251,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
                 className={cn(
                   'inline-block',
                   'w-full',
-                  'whitespace-pre-wrap break-words',
+                  'whitespace-pre-wrap break-all',
 
                   // Twemoji
                   '[&>img]:inline',
@@ -276,6 +280,11 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
                 <LinkifyText text={message.body} isHost={isHost} />
               </span>
             </Twemoji>
+
+            {/* リンクプレビュー */}
+            {lastUrl && (
+              <UrlPreview className="mb-0.5 ml-auto mt-2" url={lastUrl} />
+            )}
           </div>
 
           {/* 時間 */}
