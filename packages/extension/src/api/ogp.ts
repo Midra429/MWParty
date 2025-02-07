@@ -3,11 +3,12 @@ import { webext } from '@/utils/webext'
 
 export type OgpData = {
   url: string
-  title?: string
-  description?: string
-  site_name?: string
-  image?: string
-  is_large_image?: number
+  site_name: string | null
+  favicon: string | null
+  title: string | null
+  description: string | null
+  image: string | null
+  is_large_image: number | null
   created_at: number
   updated_at: number
 }
