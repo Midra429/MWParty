@@ -62,13 +62,6 @@ export default defineConfig({
 
   hooks: {
     'build:manifestGenerated': (wxt, manifest) => {
-      const key = import.meta.env.WXT_CRX_PUBLIC_KEY
-
-      if (key) {
-        // @ts-expect-error
-        manifest.key = key
-      }
-
       switch (wxt.config.browser) {
         case 'firefox': {
           if (manifest.sidebar_action) {
