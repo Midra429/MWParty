@@ -8,7 +8,7 @@ import { deepmerge } from '@/utils/merge'
 import { webext } from '@/utils/webext'
 import { useTheme } from '@/hooks/useTheme'
 
-const partykitHost = import.meta.env.WXT_PARTYKIT_HOST
+const partykitHostShort = import.meta.env.WXT_PARTYKIT_HOST_SHORT
 const publishableKey = import.meta.env.WXT_CLERK_PUBLISHABLE_KEY
 
 const iconUrl = webext.runtime.getURL('/icons/128.png')
@@ -126,10 +126,9 @@ export const ClerkProvider: React.FC<{
   return (
     <Provider
       publishableKey={publishableKey}
-      allowedRedirectOrigins={[partykitHost]}
-      signUpForceRedirectUrl={`${partykitHost}/redirect/afterSignUp`}
-      signInForceRedirectUrl={`${partykitHost}/redirect/afterSignIn`}
-      afterSignOutUrl={`${partykitHost}/redirect/afterSignOut`}
+      signUpForceRedirectUrl={`${partykitHostShort}/redirect/afterSignUp`}
+      signInForceRedirectUrl={`${partykitHostShort}/redirect/afterSignIn`}
+      afterSignOutUrl={`${partykitHostShort}/redirect/afterSignOut`}
       localization={localization}
       appearance={{
         ...appearance,
