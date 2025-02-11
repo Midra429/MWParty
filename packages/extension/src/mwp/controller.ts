@@ -1,13 +1,17 @@
 import type { Runtime } from 'wxt/browser'
 import type { PlaybackVod } from 'backend/schemas/message'
+import type { SettingsItems } from '@/types/storage'
 import type {
   PortMessageToContent,
   PortMessageToBackground,
 } from '@/entrypoints/background/connection'
 import type { MwpVod } from './vods'
 
+import { SETTINGS_MAX_LATENCY_SEC } from '@/constants/settings/default'
+
 import { logger } from '@/utils/logger'
 import { webext } from '@/utils/webext'
+import { settings } from '@/utils/settings/extension'
 import { sendUtilsMessage } from '@/utils/extension/messaging'
 
 import { onMwpMessage } from './messaging'
@@ -33,7 +37,8 @@ export class MwpController {
   #video: HTMLVideoElement | null = null
   #port: Runtime.Port | null = null
 
-  #threshold: number = 1
+  #maxLatency: SettingsItems['settings:maxLatency'] = 'medium'
+  #useMaxLatency: boolean = false
   #intervalId: NodeJS.Timeout | null = null
 
   #callbacks: {
@@ -69,7 +74,7 @@ export class MwpController {
       this.#video.currentTime = playback?.time ?? 0
 
       setTimeout(() => {
-        this.#threshold = 2.5
+        this.#useMaxLatency = true
       }, 6000)
     },
     // host
@@ -246,9 +251,13 @@ export class MwpController {
     }
     // ゲスト (再生状況を監視・反映)
     else {
-      this.#threshold = 1
+      this.#useMaxLatency = false
 
       this.#callbacks.onDeactivate.push(
+        settings.watch('settings:maxLatency', (maxLatency) => {
+          this.#maxLatency = maxLatency
+        }),
+
         mwpState.watch('playback', (newPlayback, oldPlayback) => {
           if (!this.#video) return
 
@@ -264,9 +273,13 @@ export class MwpController {
             }
             // 再生時間
             else if (time !== oldPlayback?.time) {
+              const latencyThreshold =
+                SETTINGS_MAX_LATENCY_SEC[
+                  this.#useMaxLatency ? this.#maxLatency : 'min'
+                ]
               const diff = Math.abs(this.#video.currentTime - time)
 
-              if (this.#threshold <= diff) {
+              if (latencyThreshold <= diff) {
                 this.#video.currentTime = time
               }
             }

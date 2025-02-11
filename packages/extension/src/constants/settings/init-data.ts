@@ -57,6 +57,34 @@ export const SETTINGS_INIT_DATA: SettingsInitData = [
         })),
       },
       {
+        settingsKey: 'settings:maxLatency',
+        inputType: 'select',
+        label: 'ホストとの最大遅延',
+        description: '同期した再生時間とのずれを許容する最大値',
+        options: [
+          {
+            label: '最小 (0.5秒)',
+            value: 'min',
+          },
+          {
+            label: '小 (1.5秒)',
+            value: 'low',
+          },
+          {
+            label: '中 (2.5秒)',
+            value: 'medium',
+          },
+          {
+            label: '大 (3.5秒)',
+            value: 'high',
+          },
+          {
+            label: '最大 (4.5秒)',
+            value: 'max',
+          },
+        ],
+      },
+      {
         settingsKey: 'settings:showChangelog',
         inputType: 'toggle',
         label: '更新内容を表示',

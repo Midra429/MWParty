@@ -28,6 +28,9 @@ export type SettingsItems = {
   // 動画配信サービス
   'settings:vods': VodKey[]
 
+  // ホストとの最大遅延 (最小 / 小 / 中 / 大 / 最大)
+  'settings:maxLatency': 'min' | 'low' | 'medium' | 'high' | 'max'
+
   // プラグイン
   'settings:plugins': PluginKey[]
 }
