@@ -1,7 +1,7 @@
 {
   "name": "mwparty-extension",
   "displayName": "MWParty",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "複数の動画配信サービスに対応したウォッチパーティー用拡張機能",
   "author": "Midra",
   "license": "MIT",
